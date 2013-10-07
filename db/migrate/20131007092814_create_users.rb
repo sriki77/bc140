@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration
         t.string :photo
         t.integer :lock_version, :default => 0
         t.timestamps
+        t.index :handle, :unique=>true
     end
   end
 end

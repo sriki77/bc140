@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007092814) do
+ActiveRecord::Schema.define(version: 20131007110506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "follows", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.integer  "lock_version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tweets", force: true do |t|
+    t.string   "msg",          limit: 140
+    t.integer  "lock_version"
+    t.string   "converse"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "users", force: true do |t|
     t.string   "handle",                   null: false
@@ -27,5 +44,7 @@ ActiveRecord::Schema.define(version: 20131007092814) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["handle"], name: "index_users_on_handle", unique: true, using: :btree
 
 end
