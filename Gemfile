@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 ruby "1.9.3"
 
@@ -37,10 +37,15 @@ end
 gem 'rails_12factor', group:  :production
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
 gem 'unicorn', group: :production
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl'
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development

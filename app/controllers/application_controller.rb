@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   def index
       render text: "Hello World"
   end
+
+  def render_with (code,msg)
+     render :text => msg, :status => code
+  end
 end

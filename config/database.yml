@@ -48,8 +48,9 @@ test:
   encoding: unicode
   database: bc140_test
   pool: 5
-  username: bc140
-  password:
+  username: postgres
+  password: postgres
+  host: localhost
 
 production:
   adapter: postgresql

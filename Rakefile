@@ -4,3 +4,7 @@
 require File.expand_path('../config/application', __FILE__)
 
 Bc140::Application.load_tasks
+
+task :m => ['db:migrate']
+
+task :n => ['db:drop','db:create',:m]
