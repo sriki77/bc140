@@ -3,9 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def index
-      render text: "Hello World"
-  end
+  private
 
   def render_with (code,msg)
      render :text => msg, :status => code
@@ -13,5 +11,13 @@ class ApplicationController < ActionController::Base
 
   def render_msg (msg)
     render :text => msg
+  end
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def authorize
+    render :status => 403 if current_user.nil?
   end
 end
