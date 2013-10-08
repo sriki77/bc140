@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
   def render_with (code,msg)
      render :text => msg, :status => code
   end
+
+  def render_msg (msg)
+    render :text => msg
+  end
 end
