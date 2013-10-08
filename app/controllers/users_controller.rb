@@ -6,9 +6,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render :text => @user.handle, :status => 200
+      render_with  200, @user.handle
     else
-      render :text => "#{@user.errors.to_json} ",:status => 403
+      render_with  403, "#{@user.errors.to_json} "
     end
 
   end
