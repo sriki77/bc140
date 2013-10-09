@@ -1,5 +1,7 @@
 == README
 
+{<img src="https://travis-ci.org/sriki77/bc140.png" />}[https://travis-ci.org/sriki77/bc140]
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
