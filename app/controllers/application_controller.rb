@@ -5,8 +5,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def render_with (code,msg)
-     render :text => msg, :status => code
+
+
+  def render_with (code, msg)
+    render :text => msg, :status => code
   end
 
   def render_msg (msg)
@@ -18,6 +20,11 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    render :status => 403 if current_user.nil?
+    render_with 403, "User not authorized" if current_user.nil?
   end
+
+  def to_j (o)
+    o.as_json(:except => [:id, :created_at, :updated_at, :lock_version])
+  end
+
 end

@@ -5,6 +5,7 @@ Bc140::Application.routes.draw do
 
   resources :sessions, :only => [:create, :destroy]
   resources :users, :only => [:create]
+  resource :profile, :except => [:new,:edit]
 
   match '*a', :to => 'errors#routing', :via=>[:get,:post]
 end
