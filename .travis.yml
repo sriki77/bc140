@@ -1,10 +1,19 @@
 language: ruby
 rvm:
-  - 1.9.3
+- 1.9.3
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rake
 before_script:
-  - psql -c 'create database bc140_test' -U postgres
-
+- psql -c 'create database bc140_test' -U postgres
+deploy:
+  provider: heroku
+  api_key:
+    secure: gIfRCE3BT8CgoEXmQ3QJi7o/xtgz1ncWYL7nmwRrzjpFwk7Kxt953rWXI5np8+tV0jSD0GTvEKYmX8/pP+DMzrj6X8I2LvUmS3aP0W+dhOXV1300V0jgSuMrnFyEO6PwWfKzfFb8eIj2/6Y7fcIX9Ufsr9eZ8IAJSRo8MkqjSCY=
+  app: dry-garden-2703
+  on:
+    repo: sriki77/bc140
+  run:
+    - "rake db:migrate"
+    - restart
