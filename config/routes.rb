@@ -4,12 +4,12 @@ Bc140::Application.routes.draw do
   post 'signup', to: 'users#create', as: 'signup'
 
   resources :sessions, :only => [:create, :destroy]
-  resources :users, :only => [:create]
+  resources :users, :only => [:create] do
+    get :followers, :on => :collection
+  end
   resource :profiles, :except => [:new, :edit]
   resources :tweets, :except => [:new, :edit] do
-    member do
-      get :converse
-    end
+    get :converse, :on => :member
   end
 
   match '*a', :to => 'errors#routing', :via => [:get, :post]

@@ -53,4 +53,15 @@ describe UsersController do
       response.body.should == user.handle
     end
   end
+
+  context "Followers" do
+     it "Should list followers of the user" do
+        user = FactoryGirl.create(:user_with_followers)
+        session[:user_id]=user.id
+        get :followers
+        response.response_code.should==200
+        res=JSON.parse(response.body)
+        res.length.should == 5
+     end
+  end
 end

@@ -85,4 +85,5 @@ describe TweetsController do
     get :converse, {:id=>res[0]['id']}
     JSON.parse(response.body).length.should == 5
   end
+
 end
