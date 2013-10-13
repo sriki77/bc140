@@ -6,7 +6,11 @@ Bc140::Application.routes.draw do
   resources :sessions, :only => [:create, :destroy]
   resources :users, :only => [:create]
   resource :profiles, :except => [:new, :edit]
-  resources :tweets, :except => [:new, :edit]
+  resources :tweets, :except => [:new, :edit] do
+    member do
+      get :converse
+    end
+  end
 
   match '*a', :to => 'errors#routing', :via => [:get, :post]
 end

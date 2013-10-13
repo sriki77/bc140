@@ -56,4 +56,13 @@ class TweetsController < ApplicationController
     params[:tweet].permit(:msg, :converse, :targeted)
   end
 
+  def converse
+    return render_with 400, "Invalid Request" unless params[:id]
+    tweet=Tweet.find(params[:id])
+    return render_with 404, "Tweet #{params[:id]} not found" unless tweet
+    tweets=Tweet.where(:converse => tweet.converse)
+    render_msg tweets.to_json
+  end
+
+
 end

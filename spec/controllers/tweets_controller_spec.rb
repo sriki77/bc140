@@ -70,4 +70,19 @@ describe TweetsController do
     current_user.tweets[0].msg.should == tweet.msg
   end
 
+
+  it "should return given conversation of user" do
+    user = FactoryGirl.create(:user_with_tweets)
+    session[:user_id]=user.id
+    post :create, {:tweet => FactoryGirl.attributes_for(:cook_tweet)}
+    response.response_code.should==200
+    get :index
+    response.response_code.should==200
+    res = JSON.parse(response.body)
+    res.length.should == 6
+    get :converse, {:id=>res[-1]['id']}
+    JSON.parse(response.body).length.should == 1
+    get :converse, {:id=>res[0]['id']}
+    JSON.parse(response.body).length.should == 5
+  end
 end
