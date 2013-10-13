@@ -6,6 +6,7 @@ Bc140::Application.routes.draw do
   resources :sessions, :only => [:create, :destroy]
   resources :users, :only => [:create] do
     get :followers, :on => :collection
+    get :following, :on => :collection
   end
   resource :profiles, :except => [:new, :edit]
   resources :tweets, :except => [:new, :edit] do

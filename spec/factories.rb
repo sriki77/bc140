@@ -53,7 +53,7 @@ FactoryGirl.define do
     targeted true
   end
 
-  factory :user_with_followers, class: User do
+  factory :user_with_follows, class: User do
     handle "Prestige"
     password "abc123"
     password_confirmation "abc123"
@@ -67,6 +67,13 @@ FactoryGirl.define do
       end
       f
     }
+    following {
+      f=[]
+      (1..5).each do
+        f<<FactoryGirl.create(:following)
+      end
+      f
+    }
 
   end
 
@@ -75,4 +82,11 @@ FactoryGirl.define do
     password "abc123"
     password_confirmation "abc123"
   end
+
+  factory :following, class: User do
+    sequence(:handle) { |n| "toBeCooked#{n}" }
+    password "abc123"
+    password_confirmation "abc123"
+  end
+
 end

@@ -28,7 +28,11 @@ describe UsersController do
   context "When input is invalid" do
 
     it "should return 403 if user handle length is invalid" do
-      post :create , {:user=>{:handle=>'c'}}
+      post :create , {:user=>{:handle=>'c',:password=>'p', :password_confirmation=>'p'}}
+      response.response_code.should==403
+      res=JSON.parse(response.body)
+      res['handle'].should_not be_nil
+      post :create , {:user=>{:handle=>'c_b_c',:password=>'p', :password_confirmation=>'p'}}
       response.response_code.should==403
       res=JSON.parse(response.body)
       res['handle'].should_not be_nil
@@ -54,14 +58,23 @@ describe UsersController do
     end
   end
 
-  context "Followers" do
+  context "Followers & Following" do
      it "Should list followers of the user" do
-        user = FactoryGirl.create(:user_with_followers)
+        user = FactoryGirl.create(:user_with_follows)
         session[:user_id]=user.id
         get :followers
         response.response_code.should==200
         res=JSON.parse(response.body)
         res.length.should == 5
+        end
+     it "Should list following of the user" do
+        user = FactoryGirl.create(:user_with_follows)
+        session[:user_id]=user.id
+        get :following
+        response.response_code.should==200
+        res=JSON.parse(response.body)
+        res.length.should == 5
+        res[0]['handle'].start_with?('toBeCooked').should be_true
      end
   end
 end

@@ -16,7 +16,11 @@ class UsersController < ApplicationController
   end
 
   def followers
-      render_msg @current_user.followers.to_json
+    render_msg @current_user.followers.to_json
+  end
+
+  def following
+    render_msg @current_user.following.to_json
   end
 
   def user_params
