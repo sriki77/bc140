@@ -33,6 +33,22 @@ describe TweetsController do
     t.should == tweet
   end
 
+  it "should return tweets in sorted order for user" do
+    user = FactoryGirl.create(:user)
+    tweet = FactoryGirl.build(:cook_tweet)
+    session[:user_id]=user.id
+    post :create, {:tweet => {:msg=>"213"}}
+    post :create, {:tweet => {:msg=>"132"}}
+    post :create, {:tweet => {:msg=>"632"}}
+    get :index
+    response.response_code.should==200
+    res=JSON.parse(response.body)
+    res.length.should == 3
+    res[0]['msg'].should == "213"
+    res[1]['msg'].should == "132"
+    res[2]['msg'].should == "632"
+  end
+
   it "should delete tweet of user" do
     user = FactoryGirl.create(:user_with_tweets)
     session[:user_id]=user.id
@@ -50,8 +66,8 @@ describe TweetsController do
     current_user.tweets[0].msg.should_not == tweet.msg
     put :update, {:id=>tweet.id,:tweet => FactoryGirl.attributes_for(:cook_tweet)}
     response.response_code.should==200
-    current_user.tweets[-1].id.should == tweet.id
-    current_user.tweets[-1].msg.should == tweet.msg
+    current_user.tweets[0].id.should == tweet.id
+    current_user.tweets[0].msg.should == tweet.msg
   end
 
 end

@@ -42,8 +42,9 @@ FactoryGirl.define do
 
   factory :tweet do
     msg "Whistle from Hawkins Pressure Cooker #{Time.now}"
-    converse "xyz"
+    converse  "xyz"
     targeted false
+
   end
 
   factory :cook_tweet, class: Tweet do
