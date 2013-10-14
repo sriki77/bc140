@@ -70,7 +70,7 @@ FactoryGirl.define do
     following {
       f=[]
       (1..5).each do
-        f<<FactoryGirl.create(:following)
+        f<< FactoryGirl.create(:following)
       end
       f
     }
@@ -87,6 +87,15 @@ FactoryGirl.define do
     sequence(:handle) { |n| "toBeCooked#{n}" }
     password "abc123"
     password_confirmation "abc123"
+    after(:create) do |user|
+      FactoryGirl.create_list(:following_tweet, 5, user: user)
+    end
+  end
+
+  factory :following_tweet, class: Tweet do
+    sequence(:msg) { |n| "following tweet #{n}" }
+    converse "lmn"
+    targeted false
   end
 
 end

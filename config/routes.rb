@@ -11,6 +11,7 @@ Bc140::Application.routes.draw do
   resource :profiles, :except => [:new, :edit]
   resources :tweets, :except => [:new, :edit] do
     get :converse, :on => :member
+    get :tweets, :on => :collection
   end
 
   match '*a', :to => 'errors#routing', :via => [:get, :post]

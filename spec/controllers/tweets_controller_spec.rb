@@ -37,9 +37,9 @@ describe TweetsController do
     user = FactoryGirl.create(:user)
     tweet = FactoryGirl.build(:cook_tweet)
     session[:user_id]=user.id
-    post :create, {:tweet => {:msg=>"213"}}
-    post :create, {:tweet => {:msg=>"132"}}
-    post :create, {:tweet => {:msg=>"632"}}
+    post :create, {:tweet => {:msg => "213"}}
+    post :create, {:tweet => {:msg => "132"}}
+    post :create, {:tweet => {:msg => "632"}}
     get :index
     response.response_code.should==200
     res=JSON.parse(response.body)
@@ -64,7 +64,7 @@ describe TweetsController do
     tweet.id=user.tweets[0].id
     session[:user_id]=user.id
     current_user.tweets[0].msg.should_not == tweet.msg
-    put :update, {:id=>tweet.id,:tweet => FactoryGirl.attributes_for(:cook_tweet)}
+    put :update, {:id => tweet.id, :tweet => FactoryGirl.attributes_for(:cook_tweet)}
     response.response_code.should==200
     current_user.tweets[0].id.should == tweet.id
     current_user.tweets[0].msg.should == tweet.msg
@@ -80,10 +80,21 @@ describe TweetsController do
     response.response_code.should==200
     res = JSON.parse(response.body)
     res.length.should == 6
-    get :converse, {:id=>res[-1]['id']}
+    get :converse, {:id => res[-1]['id']}
     JSON.parse(response.body).length.should == 1
-    get :converse, {:id=>res[0]['id']}
+    get :converse, {:id => res[0]['id']}
     JSON.parse(response.body).length.should == 5
+  end
+
+  it "Should list all user tweets along with following tweets of the user" do
+    user = FactoryGirl.create(:user_with_follows)
+    session[:user_id]=user.id
+    get :tweets
+    response.response_code.should==200
+    res=JSON.parse(response.body)
+    res.length.should == 30
+    res[0]['user'].should == 'Prestige'
+    res[-1]['user'].start_with?('toBeCooked').should be_true
   end
 
 end
