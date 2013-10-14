@@ -14,5 +14,8 @@ Bc140::Application.routes.draw do
     get :tweets, :on => :collection
   end
 
+  post 'follow/:handle' => 'users#follow', :as => 'follow'
+  post 'unfollow/:handle' => 'users#unfollow', :as => 'unfollow'
+
   match '*a', :to => 'errors#routing', :via => [:get, :post]
 end

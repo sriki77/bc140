@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def create
 
-    return render_with 400, "Invalid Request" unless params[:user];
+    return render_with 400, "Invalid Request" unless params[:user]
 
     @user = User.new(user_params)
 
@@ -13,6 +13,27 @@ class UsersController < ApplicationController
       render_with 403, "#{@user.errors.to_json} "
     end
 
+  end
+
+  def follow
+    return render_with 400, "Invalid Request" unless params[:handle]
+    user_to_follow=User.where(:handle => params[:handle]).first
+    return render_with 404, "User with handle #{params[:handle]} not found" unless user_to_follow
+    user_to_follow.followers << @current_user
+    @current_user.reload; user_to_follow.reload
+    render_msg "Following #{user_to_follow.handle}"
+  end
+
+  def unfollow
+    return render_with 400, "Invalid Request" unless params[:handle]
+    user_to_follow=User.where(:handle => params[:handle]).first
+    return render_with 404, "User with handle #{params[:handle]} not found" unless user_to_follow
+    if user_to_follow.followers.delete @current_user
+      @current_user.reload; user_to_follow.reload
+      render_msg "Unfollowed #{user_to_follow.handle}"
+    else
+      render_msg "Unfollow did not have any effect, may not be a follower"
+    end
   end
 
   def followers

@@ -7,6 +7,12 @@ FactoryGirl.define do
     password_confirmation "abc123"
   end
 
+  factory :user_to_be_followed,class: User do
+    sequence(:handle) { |n| "FollowMe#{n}" }
+    password "abc123"
+    password_confirmation "abc123"
+  end
+
   factory :user_with_profile, class: User do
     handle "Hawkins"
     password "abc123"
