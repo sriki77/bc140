@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :handle
   validates_format_of :handle, :with => /[A-Za-z][A-Za-z0-9]+/ , :message => "should start with alphabet; can contain digits/alphabets only"
   has_secure_password
+
   has_one :profile, :dependent => :destroy
   has_many :tweets, :dependent => :destroy
   has_and_belongs_to_many :followers,

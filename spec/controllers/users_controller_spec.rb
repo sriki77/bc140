@@ -106,10 +106,8 @@ describe UsersController do
       res[0]['handle'].should == follow.handle
       post :unfollow, {:handle => follow.handle}
       response.response_code.should==200
-      get :following
-      response.response_code.should==200
-      res=JSON.parse(response.body)
-      res.length.should ==0
+      logged_in = assigns[:current_user]
+      logged_in.following.length.should == 0
     end
   end
 end

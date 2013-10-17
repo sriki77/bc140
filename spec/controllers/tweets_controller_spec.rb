@@ -89,7 +89,7 @@ describe TweetsController do
   it "Should list all user tweets along with following tweets of the user" do
     user = FactoryGirl.create(:user_with_follows)
     session[:user_id]=user.id
-    get :tweets
+    get :list
     response.response_code.should==200
     res=JSON.parse(response.body)
     res.length.should == 30

@@ -64,7 +64,7 @@ class TweetsController < ApplicationController
     render_msg tweets.to_json
   end
 
-  def tweets
+  def list
     twts= Array.new(@current_user.tweets)
     twts.sort { |t1, t2| t1.id<=>t2.id }
     @current_user.following.each { |f| (twts << f.tweets).flatten!}
